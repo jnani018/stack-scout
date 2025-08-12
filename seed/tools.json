@@ -1,0 +1,59 @@
+{
+  "tools": [
+    {
+      "id": "t1",
+      "name": "OpenRouter",
+      "category": "genai",
+      "website": "https://openrouter.ai",
+      "pricing_url": "https://openrouter.ai/pricing",
+      "region_tags": [
+        "global"
+      ],
+      "reliability": 0.82
+    },
+    {
+      "id": "t2",
+      "name": "Qdrant",
+      "category": "vector-db",
+      "website": "https://qdrant.tech",
+      "pricing_url": "https://qdrant.tech/pricing",
+      "region_tags": [
+        "global"
+      ],
+      "reliability": 0.9
+    },
+    {
+      "id": "t3",
+      "name": "Railway",
+      "category": "compute",
+      "website": "https://railway.app",
+      "pricing_url": "https://railway.app/pricing",
+      "region_tags": [
+        "global"
+      ],
+      "reliability": 0.78
+    },
+    {
+      "id": "t4",
+      "name": "Neon",
+      "category": "database",
+      "website": "https://neon.tech",
+      "pricing_url": "https://neon.tech/pricing",
+      "region_tags": [
+        "global"
+      ],
+      "reliability": 0.88
+    },
+    {
+      "id": "t5",
+      "name": "Cloudflare R2",
+      "category": "storage",
+      "website": "https://www.cloudflare.com/products/r2/",
+      "pricing_url": "https://developers.cloudflare.com/r2/pricing/",
+      "region_tags": [
+        "global"
+      ],
+      "reliability": 0.86
+    }
+  ]
+}

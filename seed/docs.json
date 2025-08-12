@@ -1,0 +1,29 @@
+{
+  "docs": [
+    {
+      "tool_id": "t1",
+      "src_url": "https://openrouter.ai/pricing",
+      "content": "Free access via per-request paid models; some community models low cost."
+    },
+    {
+      "tool_id": "t2",
+      "src_url": "https://qdrant.tech/pricing",
+      "content": "Free tier includes managed cluster with limited storage."
+    },
+    {
+      "tool_id": "t3",
+      "src_url": "https://railway.app/pricing",
+      "content": "Starter free hours per month; sleep on inactivity."
+    },
+    {
+      "tool_id": "t4",
+      "src_url": "https://neon.tech/pricing",
+      "content": "Free tier serverless Postgres with usage caps."
+    },
+    {
+      "tool_id": "t5",
+      "src_url": "https://developers.cloudflare.com/r2/pricing/",
+      "content": "S3-compatible object storage with generous free egress within CF."
+    }
+  ]
+}

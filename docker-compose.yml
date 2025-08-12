@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: stackscout
+      POSTGRES_PASSWORD: stackscout
+      POSTGRES_DB: stackscout
+    ports: ["5432:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U stackscout"]
+      interval: 5s
+      timeout: 5s
+      retries: 20

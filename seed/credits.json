@@ -1,0 +1,59 @@
+{
+  "credits": [
+    {
+      "tool_id": "t1",
+      "amount": 0,
+      "currency": "USD",
+      "eligibility": {
+        "student_email": false,
+        "card": false
+      },
+      "link": "https://openrouter.ai/pricing",
+      "steps": "Create account, add key"
+    },
+    {
+      "tool_id": "t2",
+      "amount": 0,
+      "currency": "USD",
+      "eligibility": {
+        "student_email": false,
+        "card": false
+      },
+      "link": "https://qdrant.tech/pricing",
+      "steps": "Start free tier cluster"
+    },
+    {
+      "tool_id": "t3",
+      "amount": 5,
+      "currency": "USD",
+      "eligibility": {
+        "student_email": false,
+        "card": false
+      },
+      "link": "https://railway.app/pricing",
+      "steps": "Start project, free hours reset monthly"
+    },
+    {
+      "tool_id": "t4",
+      "amount": 0,
+      "currency": "USD",
+      "eligibility": {
+        "student_email": false,
+        "card": false
+      },
+      "link": "https://neon.tech/pricing",
+      "steps": "Create serverless database"
+    },
+    {
+      "tool_id": "t5",
+      "amount": 0,
+      "currency": "USD",
+      "eligibility": {
+        "student_email": false,
+        "card": false
+      },
+      "link": "https://developers.cloudflare.com/r2/pricing/",
+      "steps": "Activate R2 in dashboard"
+    }
+  ]
+}
