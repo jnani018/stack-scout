@@ -1,7 +1,6 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from pydantic import BaseModel
 from typing import Dict, Any
-from core_store import credits_for, TOOLS
 
 router = APIRouter()
 
@@ -9,17 +8,17 @@ class CheckReq(BaseModel):
     tool_id: str
     user_claims: Dict[str, Any] = {}
 
+CREDITS = {
+    "t2": {"amount": 0, "currency": "USD", "requires": {"student_email": False}},
+    "t3": {"amount": 5, "currency": "USD", "requires": {"student_email": False}},
+    "t4": {"amount": 0, "currency": "USD", "requires": {"student_email": False}},
+}
+
 @router.post("/check")
 def check(req: CheckReq):
-    if req.tool_id not in TOOLS:
-        raise HTTPException(404, "tool not found")
-    options = credits_for(req.tool_id)
-    verdicts = []
-    for c in options:
-        elig = c.get("eligibility", {})
-        ok = True
-        for k, v in elig.items():
-            if k in req.user_claims and req.user_claims[k] != v:
-                ok = False
-        verdicts.append({"amount": c["amount"], "currency": c["currency"], "ok": ok, "link": c["link"], "steps": c["steps"]})
-    return {"tool": TOOLS[req.tool_id]["name"], "verdicts": verdicts}
+    rule = CREDITS.get(req.tool_id)
+    if not rule:
+        return {"eligible": False, "reason": "No credit program found"}
+    needs = rule["requires"]
+    ok = all(req.user_claims.get(k, needs[k]) == needs[k] for k in needs)
+    return {"eligible": ok, "amount": rule["amount"], "currency": rule["currency"], "requires": needs}

@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
-from typing import Optional
-from core_store import list_tools, docs_for
+from typing import Optional, List, Dict, Any
+from ..services.planner import plan_from_prompt
 
 router = APIRouter()
 
@@ -9,22 +9,32 @@ class Constraints(BaseModel):
     budget: Optional[float] = Field(default=25.0)
     region: Optional[str] = None
     no_card: Optional[bool] = True
+    gpu: Optional[bool] = None
+    pii: Optional[bool] = None
 
-class PlanReq(BaseModel):
-    prompt: str
+class PlanRequest(BaseModel):
+    prompt: str = Field(..., example="Build a RAG app under $0 for 30 days, no card")
     constraints: Constraints = Constraints()
 
-@router.post("")
-def create(req: PlanReq):
-    role_map = {"llm":"genai","vector-db":"vector-db","compute":"compute","database":"database","storage":"storage"}
-    pool = list_tools(region=req.constraints.region)
-    items = []
-    for role, cat in role_map.items():
-        cands = [t for t in pool if t["category"] == cat]
-        if not cands:
-            continue
-        t = cands[0]
-        citations = [d["src_url"] for d in docs_for(t["id"])]
-        items.append({"role":role,"tool":t["name"],"cost":0,"citations":citations[:2]})
-    total = sum(i["cost"] for i in items)
-    return {"plan_id":"plan-"+req.prompt[:12].replace(" ","-"),"items":items,"totals":{"monthly":total},"tradeoffs":["Free tiers have quotas","Latency may vary on free compute"]}
+class PlanItem(BaseModel):
+    role: str
+    tool: str
+    cost: float
+    citations: List[str]
+
+class PlanResponse(BaseModel):
+    plan_id: str
+    items: List[PlanItem]
+    totals: Dict[str, float]
+    tradeoffs: List[str]
+
+@router.post("", response_model=PlanResponse)
+def create_plan(req: PlanRequest):
+    out = plan_from_prompt(req.prompt, req.constraints.model_dump())
+    items = [PlanItem(**i) for i in out["items"]]
+    return {
+        "plan_id": "plan-" + req.prompt[:12].replace(" ", "-"),
+        "items": items,
+        "totals": {"monthly": out["total"]},
+        "tradeoffs": out["tradeoffs"],
+    }
